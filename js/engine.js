@@ -25,8 +25,8 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = 707;
+    canvas.height = 550;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -80,7 +80,9 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        
+
+        //checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -92,7 +94,9 @@ var Engine = (function(global) {
      */
     function updateEntities(dt) {
         allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
+            enemy.update();
+             enemy.speed(dt);
+             enemy.checkCollisions();
         });
         player.update();
     }
@@ -116,7 +120,7 @@ var Engine = (function(global) {
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
             numRows = 6,
-            numCols = 5,
+            numCols = 7,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -152,6 +156,8 @@ var Engine = (function(global) {
         });
 
         player.render();
+        princess.render();
+        heart.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -171,7 +177,12 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Heart.png',
+        'images/char-princess-girl.png',
+        'images/lovingBoy.png',
+        'images/blueBug.png',
+        'images/greenBug.png',
     ]);
     Resources.onReady(init);
 
