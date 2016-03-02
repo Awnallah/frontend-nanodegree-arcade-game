@@ -10,7 +10,7 @@ This is my love-based version of the Frogger arcade game. The game can be played
 - Max loves the **Princess**:
 ![Princess](images/char-princess-girl.png) , but he needs to give her a **heart** : ![heart](images/Heart.png) everytime he needs to increase the **love score**.
 
-To increase the love score, Max needs to carry  heart and bring it to the Princess. Once Max has the heart, you will see it on top of him : ![MaxHeart](images/lovingBoy.png).
+To increase the love score, Max needs to carry  a heart and bring it to the Princess. Once Max has the heart, you will see it on top of him : ![MaxHeart](images/lovingBoy.png).
 
 - Max is a smart guy. He doesn't fear approaching the water since he knows that water is covered by a clear floor ![ClearFloor](images/water-block.png).
 
