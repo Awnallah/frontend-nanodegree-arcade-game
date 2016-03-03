@@ -1,6 +1,6 @@
 # Frogger Game: Love Despite the Bugs!
 
-This is my love-based version of the Frogger arcade game. The game can be played using this [link](http://Awnallah.github.io/frontend-nanodegree-arcade-game/). 
+This is my love-based version of the Frogger arcade game. The game can be played using this [link](https://rawgit.com/Awnallah/frontend-nanodegree-arcade-game/master/index.html). 
 
 - The main player in this game is Max who can be controlled using the arrow keys. This is Max:
 
