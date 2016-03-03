@@ -80,6 +80,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
+        enemyStats();
         
 
     }
@@ -93,9 +94,7 @@ var Engine = (function(global) {
      */
     function updateEntities(dt) {
         allEnemies.forEach(function(enemy) {
-            enemy.update();
-             enemy.speed(dt);
-             enemy.checkCollisions();
+            enemy.update(dt);
         });
         player.update();
     }

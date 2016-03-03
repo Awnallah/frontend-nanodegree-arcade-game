@@ -1,11 +1,8 @@
 
 /* Global variables */
-//hasHeart, a boolean that changes once a heart is taken
-var hasHeart = false;
 //allEnemies array stores the enemy objects
 var allEnemies = [];
-//score stores the game level (score)
-var score = 0;
+
 
 //general functions used throughout the code
 /*@func randomGen generates a random number between a min and a max value (the range is always one digit below the max) */
@@ -25,21 +22,35 @@ function delElem(elem, array) {
 /*@constructor of enemies
 The sprite property specifies the image using a helper method in the engine.js
 The y location property is chosen randomly from four positions in the screen where separate blocks are located.
-The speedo property is a random #  between 40 abd 99 which is utilized in the speed method (updates with every animation frame)*/
+The speedo property is a random #  between 50 abd 119 which is utilized in the speed method (updates with every animation frame)
+and uses a 40% chance for green enemy image (0,1) and 60% for a brown enemy image (2,3,4)
+The x location is set to -100 (behind the canvas) to allow for 'natual' motion approximation
+The y locaiton is randomized amongst the 4 allowed blocks
+The speedo property is randomized but the average of the randomized samlple increases by 20% with every level of the game (player.score)
+*/
 var Enemy = function() {
-    this.sprite = 'images/enemy-bug.png';
+    this.x = -100;
     this.enemyLoc = [310, 230, 145, 60];
-    this.x = 0;
     this.y = this.enemyLoc[radomGen(0, 4)];
     this.width = 66;
     this.height = 55;
-    this.speedo = radomGen(40, 100);
-
+    this.speedo = radomGen(40, 120)*(1+(player.score/5));
+    
+    
+    
+    this.picSelect = radomGen(0, 5);
+    if (this.picSelect >= 1) {
+        this.sprite = "images/enemy-bug.png";
+    } else {
+        this.sprite = "images/greenBug.png";
+    }
 };
 
-//The update method is called in the engine.js under updatedEntities(dt). It updates enemyStats() which updates the number of enemies visible on the canvas for a given level
-Enemy.prototype.update = function() {
-    enemyStats();
+//The update method is called in the engine.js under updatedEntities(dt). It updates Enemy.speed() which updates the enemy object speed and Enemy.checkCollitions()  which updates
+//the collision status with the player.
+Enemy.prototype.update = function(dt) {
+    this.speed(dt);
+    this.checkCollisions();
 };
 
 //The speed method is used to update the speed and ensure that time is consistent regardless of the processor used by utilizing a tick (dt)
@@ -108,13 +119,15 @@ var Player = function() {
     this.y = 400;
     this.width = 100;
     this.height = 81;
+    this.hasHeart = false;
+    this.score = 0;
 
 };
 
 //The update method is called in the engine.js under updatedEntities(dt). It updates the player status with each animation frame
 //The method updates the collisions method which checks for collisions of the player with the Heart or the Princess (follows later).
 Player.prototype.update = function() {
-    player.collisions();
+    this.collisions();
 
 };
 
@@ -161,52 +174,41 @@ Player.prototype.collisions = function() {
         this.sprite = "images/lovingBoy.png";
         heart.x = -100;
         heart.y = -150;
-        hasHeart = true;
+        this.hasHeart = true;
     }
     //when player reaches the Pricess with a heart, the score is increased and displayed, the heart is relocated into the canvas, the Princess gets
     //a random x location, and the player is returned to initial locaiton  and initial image(sprite).
-    if (Math.abs(this.x - princess.x) < this.width && Math.abs(this.y - princess.y) < this.height && hasHeart === true) {
-        score += 1;
-        document.getElementById("score").innerHTML = "Your love score is " + score;
+    if (Math.abs(this.x - princess.x) < this.width && Math.abs(this.y - princess.y) < this.height && this.hasHeart === true) {
+        this.score += 1;
+        document.getElementById("score").innerHTML = "Your love score is " + this.score;
         this.x = 300;
         this.y = 400;
         princess.x = princess.xlocations[radomGen(0, 6)];
         heart.x = heart.xlocations[radomGen(0, 7)];
         heart.y = 20;
-        hasHeart = false;
+        this.hasHeart = false;
         this.sprite = "images/char-boy.png";
     }
 };
 
 
-/*@function add_enemy adds an enemy object and uses a 40% chance for green enemy image (0,1) and 60% for a brown enemy image (2,3,4)
-The x location is set to -100 (behind the canvas) to allow for 'natual' motion approximation
-The y locaiton is randomized amongst the 4 allowed blocks
-The speed is randomized but the average of the randomized samlple increases by 20% with every level of the game (score)*/
+/*@function add_enemy instantiates an enemy object and pushes it to the global variable array allEnemies */
 function add_enemy() {
-    var enemy = new Enemy();
-    var picSelect = radomGen(0, 5);
-    if (picSelect >= 1) {
-        enemy.sprite = "images/enemy-bug.png";
-    } else {
-        enemy.sprite = "images/greenBug.png";
-    }
-    enemy.x = -100;
-    enemy.y = enemy.enemyLoc[radomGen(0, 4)];
-    enemy.speedo = radomGen(50, 150) * (1 + (score / 5));
-    allEnemies.push(enemy);
+
+    allEnemies.push( new Enemy());
 }
 
 
 //Objects instantiated
+//payer must be instantiated before the enemy since the enemy object has a property the depends on the player.score
 var player = new Player();
 var princess = new Princess();
 var heart = new Heart();
+
 add_enemy();
 
-
 /*@function enemyStats checks for enemies in allEnemies and deletes enemis that are off the screen
-A new enemy is generated into the array randomly from 1 to 4, with the number of enemies increasing by 12.5% with every level (score)*/
+A new enemy is generated into the array randomly from 1 to 4, with the number of enemies increasing by 12.5% with every level (player.score)*/
 function enemyStats() {
     allEnemies.forEach(function(enemy) {
 
@@ -214,7 +216,7 @@ function enemyStats() {
             delElem(allEnemies.indexOf(enemy), allEnemies);
         }
 
-        if (allEnemies.length < radomGen(1, 5) * (1 + (score / 8))) {
+        if (allEnemies.length < radomGen(1, 5) * (1 + (player.score / 8))) {
             add_enemy();
         }
 
