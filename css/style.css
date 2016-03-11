@@ -1,0 +1,17 @@
+body {
+    text-align: center;
+    padding-top: 0px;
+    background-color: black;
+}
+canvas{
+    padding: 0px;
+    margin: 0px;
+}
+.status{
+    display: inline;
+    color : red;
+    margin: 0px;
+}
+#score{
+    margin: 0px;
+}
