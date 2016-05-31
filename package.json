@@ -1,0 +1,26 @@
+{
+  "name": "frontend-nanodegree-arcade-game",
+  "version": "1.0.0",
+  "description": "This is my love-based version of the Frogger arcade game. The game can be played using this [link](https://cdn.rawgit.com/Awnallah/frontend-nanodegree-arcade-game/master/index.html).",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Awnallah/frontend-nanodegree-arcade-game.git"
+  },
+  "author": "Hamzah Awnallah",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Awnallah/frontend-nanodegree-arcade-game/issues"
+  },
+  "homepage": "https://github.com/Awnallah/frontend-nanodegree-arcade-game#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-csso": "^2.0.0",
+    "gulp-imagemin": "^3.0.1",
+    "gulp-uglify": "^1.5.3"
+  }
+}

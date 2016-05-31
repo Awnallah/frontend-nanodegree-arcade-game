@@ -12,7 +12,7 @@ function radomGen(min, max) {
 }
 
 /*@func delElem deletes an element (element) from a given array (array))
-This function is used to delete enemy bugs after leaving the screen to ensure the speed and number of 
+This function is used to delete enemy bugs after leaving the screen to ensure the speed and number of
 bugs is randomized througout the game*/
 function delElem(elem, array) {
     return array.splice(elem, 1);
@@ -35,14 +35,14 @@ var Enemy = function() {
     this.width = 66;
     this.height = 55;
     this.speedo = radomGen(40, 120)*(1+(player.score/5));
-    
-    
-    
+
+
+
     this.picSelect = radomGen(0, 5);
     if (this.picSelect >= 1) {
-        this.sprite = "images/enemy-bug.png";
+        this.sprite = "dist/images/enemy-bug.png";
     } else {
-        this.sprite = "images/greenBug.png";
+        this.sprite = "dist/images/greenBug.png";
     }
 };
 
@@ -72,12 +72,12 @@ Enemy.prototype.checkCollisions = function() {
 };
 
 
-/*@constructor Princess 
+/*@constructor Princess
 The y position of the Princess is constant throughout the program (safe zone)
 The x position is chosen randomly with each level or reload from optional six positions
 The x positin of 300 is skipped as it is dedicated for the main player*/
 var Princess = function() {
-    this.sprite = 'images/char-princess-girl.png';
+    this.sprite = 'dist/images/char-princess-girl.png';
     this.xlocations = [0, 100, 200, 400, 500, 600];
     this.x = this.xlocations[radomGen(0, 6)];
     this.y = 400;
@@ -96,7 +96,7 @@ Places the heart in a fixed y position (the first block)
 The x location is chosen randomly from seven locations
 The heart image is smaller than the player and princess so locations are adjustec accordingly (trial and error)*/
 var Heart = function() {
-    this.sprite = 'images/Heart.png';
+    this.sprite = 'dist/images/Heart.png';
     this.xlocations = [10, 110, 210, 313, 415, 515, 615];
     this.x = this.xlocations[radomGen(0, 7)];
     this.y = 20;
@@ -114,7 +114,7 @@ Heart.prototype.render = function() {
 
 //@constructor Player sets the image(sprite), and a fixed initial position of the player
 var Player = function() {
-    this.sprite = 'images/char-boy.png';
+    this.sprite = 'dist/images/char-boy.png';
     this.x = 300;
     this.y = 400;
     this.width = 100;
@@ -171,7 +171,7 @@ Player.prototype.handleInput = function(input) {
 Player.prototype.collisions = function() {
     //when a player reaches the heart, the image of the player is changed(heart on top), the heart is moved off canvas, and hasHeart is set to true.
     if (Math.abs(this.x - heart.x) < 40 && Math.abs(this.y - heart.y) < 30) {
-        this.sprite = "images/lovingBoy.png";
+        this.sprite = "dist/images/lovingBoy.png";
         heart.x = -100;
         heart.y = -150;
         this.hasHeart = true;
@@ -187,7 +187,7 @@ Player.prototype.collisions = function() {
         heart.x = heart.xlocations[radomGen(0, 7)];
         heart.y = 20;
         this.hasHeart = false;
-        this.sprite = "images/char-boy.png";
+        this.sprite = "dist/images/char-boy.png";
     }
 };
 
